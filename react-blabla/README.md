@@ -1,70 +1,147 @@
-<div align="center">
-  <img style="width: 90%;"src="https://s3.eu-central-1.amazonaws.com/samuel.weckstrom.xyz/github/react-record-webcam-logo.jpg">
-</div>
+# React Bla-bla 🗣
 
-[![Build Status](https://travis-ci.org/samuelweckstrom/react-record-webcam.svg?branch=master)](https://travis-ci.org/samuelweckstrom/react-record-webcam)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 
-Webcam video and audio recording component for React. Uses classes so all React versions are supported. Works in all latest browser versions, although Safari requires MediaRecorder to be enabled in the experimental features.
+React component and hook for generating text-to-speech using Web Speech API. Features include controls and karaoke style current word highlighting.
 
-[Demo](https://codesandbox.io/s/react-record-webcam-demo-zog8c?file=/src/App.tsx)
+<!-- [Demo](https://codesandbox.io/s/react-record-webcam-demo-zog8c?file=/src/App.tsx) -->
 
-## How to
-
-### Install
+<br>
 
 ```
-yarn add react-record-webcam
+yarn add react-blabla
 ```
+<br>
 
-### Use
+## Use hook
+<br>
 
 ```
-import Webcam from 'react-record-webcam'
+import { useBlaBla } from 'react-blabla'
 
 ...
 
-<Webcam />
+const saySomething = useBlaBla({ sentence: 'Bla bla bla Bob Lowblah!' });
+
+return (
+  <>
+    <button onClick={saySomething.start}>Start</button>
+    <button onClick={saySomething.pause}>Pause</button>
+    <button onClick={saySomething.stop}>Stop</button>
+  </>
+)
 ```
+
+<br>
+
+| Param         | Example |
+| ------------- | ------------- |
+|`sentence: string`| Text for speech |
+|`options?: object`| Options for speech, same as defined in the Web API |
+|Options| 
+||pitch: number||
+||rate: number||
+||volume: number||
+||voice: SpeechSynthesisVoice||
+||lang: string||
+
+
+<br>
+<br>
+
+## Get all voices
+
+A hook to get all voices, all voices by country code or a voice by name.
+
+```
+import { useGetVoices } from 'react-blabla'
+
+const voices = getVoices()
+```
+
+| Param         |  |
+| ------------- | ------------- |
+|`sentence: string`| |
+|`options?: object`| Options for speech, same as defined in the Web API |
+||`pitch: number`||
+||`rate: number`||
+||`volume: number`||
+||`voice: SpeechSynthesisVoice`||
+||`lang: string`||
+
+
+<br>
+<br>
+
+## Component
+
+```
+import { BlaBla } from 'react-blabla'
+
+...
+
+  return (
+    <BlaBla
+      showWords
+      showCurrentWord
+      sentence="Bla bla bla Bob Lowblah!"
+      render={({
+        start,
+        pause,
+        stop,
+        currentWord,
+      }: BlaBlaRenderPropsType) => (
+        <>
+          <div className="controls">
+            <button onClick={start}>Start</button>
+            <button onClick={pause}>Pause</button>
+            <button onClick={stop}>Stop</button>
+          </div>
+          <h1>{currentWord}</h1>
+        </>
+      )}
+    />
+  )
+```
+
+<br>
 
 ### Styling
 
-You can use the below default class names or pass your own namespace to replace the default `react-record-webcam`. 
+The component version has default namespaced CSS classes with `react-blabla` for both controls and text highlighting, but you can also pass your own namespace with the `cssNamespace` prop. 
 
 | className |
 | ------------- |
-|`react-record-webcam__wrapper`
-|`react-record-webcam__status`
-|`react-record-webcam__video`
-|`react-record-webcam__controls`
-|`react-record-webcam__controls-button`
+|`react-blabla__wrapper`
+|`react-blabla__controls`
+|`react-blabla__controls-start`
+|`react-blabla__controls-pause`
+|`react-blabla__controls-stop`
+|`react-blabla__words`
+|`react-blabla__words-highlight`
+
+<br>
 
 ### Props
 
-| Prop  | Example |
+| Param         |  |
 | ------------- | ------------- |
-| `cssNamespace: string`    |Set a namespace for the component CSS classes|
-|`downloadFileName: string` |Filename for video download |
-|`getStatus` |Callback to get webcam status  |
-|`recordingLength: number`  |Set max recording length in seconds  |
-|`namespace: string`| Pass own CSS namespace|
-|`options: object` |Options for recording video|
-||`type: video | audio`|
-||`mimeType: video/mp4 | audio/webm | video/webm;codecs=vp9 | video/webm;codecs=vp8 | video/webm;codecs=h264`
-||`video: { minWidth, minHeight, maxWidth, maxHeight, minAspectRatio }`
-|`statusMessages: object` |Pass own status messages to recorder|
-||`{ INIT, CLOSED, OPEN, RECORDING, PREVIEW, ERROR }`
-|`controlLabels: object`|Pass custom labels to control buttons|
-|| `{ CLOSE, DOWNLOAD, OPEN, RETAKE, START, STOP }`
-|`render`  |Render prop that passes status and controls|
-|| `isWebcamOn`|
-|| `isRecording`|
-|| `isPreview`|
-|| `openCamera`|
-|| `closeCamera`|
-|| `start`|
-|| `stop`|
-|| `retake`|
-|| `download`|
-|| `status`|
+|`sentence: string`||
+|`cssNamespace?: string`||
+|`showWords?: boolean`||
+|`showCurrentWord?: boolean`||
+|`disableStyles?: boolean`||
+|`options?: object`| Options for speech, same as defined in the Web API |
+||`pitch: number`||
+||`rate: number`||
+||`volume: number`||
+||`voice: SpeechSynthesisVoice`||
+||`lang: string`||
+|`render?: ({}: BlaBlaRenderPropsType) => JSX.Element`| Render prop that passes following params|
+||`start: () => void`||
+||`pause: () => void`||
+||`stop: () => void`||
+||`allWords: string[]`||
+||`currentWord: string`||
+||`currentWordIndex: number`||
 

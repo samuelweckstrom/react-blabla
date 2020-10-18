@@ -1,6 +1,5 @@
 # React Bla-bla 🗣
 
-[![Build Status](https://travis-ci.org/samuelweckstrom/react-record-webcam.svg?branch=master)](https://travis-ci.org/samuelweckstrom/react-record-webcam)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 
 React component and hook for generating text-to-speech using Web Speech API. Features include controls and karaoke style current word highlighting.
@@ -51,7 +50,6 @@ return (
 <br>
 
 ## Get all voices
-#
 
 A hook to get all voices, all voices by country code or a voice by name.
 
@@ -76,7 +74,7 @@ const voices = getVoices()
 <br>
 
 ## Component
-#
+
 ```
 import { BlaBla } from 'react-blabla'
 
@@ -124,7 +122,7 @@ The component version has default namespaced CSS classes with `react-blabla` for
 
 <br>
 
-### Component props
+### Props
 
 | Param         |  |
 | ------------- | ------------- |
