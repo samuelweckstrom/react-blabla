@@ -1,0 +1,8 @@
+.demo-container {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 2rem;
+  height: 10%;
+  width: 50%;
+  font-family: Arial, Helvetica, sans-serif;
+}
