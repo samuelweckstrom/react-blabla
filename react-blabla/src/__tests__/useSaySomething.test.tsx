@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useSaySomething } from '../useSaySomething';
+import { useBlaBla } from '../useBlaBla';
 import { MockSpeechSynthesis } from './mocks';
 
 const testParams = { sentence: 'hello there' };
 
 function TestComponent() {
-  const saySomething = useSaySomething(testParams);
+  const saySomething = useBlaBla(testParams);
 
   return (
     <div className="demo-container">
