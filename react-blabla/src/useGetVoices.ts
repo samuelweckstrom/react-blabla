@@ -7,7 +7,7 @@ type getVoicesParas = {
 
 export function useGetVoices(
   params: getVoicesParas
-): SpeechSynthesisVoice[] | SpeechSynthesisVoice | string {
+): SpeechSynthesisVoice[] | SpeechSynthesisVoice {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   window.speechSynthesis.onvoiceschanged = (e) => {
     const allVoices = window.speechSynthesis.getVoices();
