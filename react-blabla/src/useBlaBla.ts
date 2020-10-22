@@ -10,7 +10,7 @@ type useBlaBlaOptions = {
 
 type useBlaBlaParams = {
   sentence: string;
-  options?: useBlaBlaOptions;
+  options?: Partial<useBlaBlaOptions>;
 };
 
 const synthesis = window.speechSynthesis;
