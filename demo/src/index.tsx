@@ -9,7 +9,7 @@ import {
 import './styles.css';
 
 const App = () => {
-  const voices = useGetVoices({ language: 'en-GB' });
+  const voices: any = useGetVoices({ language: 'en-GB' });
   const saySomething = useBlaBla({
     sentence: 'Bla bla bla!',
     options: { voice: voices[0] },
