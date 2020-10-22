@@ -4,7 +4,7 @@
 
 React component and hook for generating text-to-speech using Web Speech API. Features include controls and karaoke style current word highlighting.
 
-<!-- [Demo](https://codesandbox.io/s/react-record-webcam-demo-zog8c?file=/src/App.tsx) -->
+[Demo](https://codesandbox.io/s/react-blabla-demo-ptnb3)
 
 <br>
 
