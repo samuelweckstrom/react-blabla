@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "start:project": "yarn workspace react-blabla start",
+    "build:project": "yarn workspace react-blabla build",
     "start:demo": "yarn workspace demo start",
     "test": "jest"
   },
