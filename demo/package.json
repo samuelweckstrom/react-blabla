@@ -7,8 +7,8 @@
     "start": "parcel index.html"
   },
   "dependencies": {
+    "react": "^16.8.0",
     "react-blabla": "*",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.8.0"
   }
 }
