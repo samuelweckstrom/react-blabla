@@ -1,59 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  useGetVoices,
-  useBlaBla,
-  BlaBla,
-  BlaBlaRenderPropsType,
-} from 'react-blabla';
+import { useGetVoices, useBlabla } from 'react-blabla';
 import './styles.css';
 
-const App = () => {
-  const voices: any = useGetVoices({ language: 'en-GB' });
-  const saySomething = useBlaBla({
-    sentence: 'Bla bla bla!',
-    options: { voice: voices[0] },
+function App() {
+  const voice: SpeechSynthesisVoice | SpeechSynthesisVoice[] = useGetVoices({
+    name: 'Amelie',
+  });
+  const blabla = useBlabla({
+    sentence:
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum',
+    options: { voice },
   });
   return (
     <>
-      <div className="demo-container">
-        <h1>React blabla!</h1>
-        <h2>Component demo</h2>
-        <BlaBla
-          showWords
-          showCurrentWord
-          sentence="Bla bla bla!"
-          render={({
-            start,
-            pause,
-            stop,
-            currentWord,
-          }: BlaBlaRenderPropsType) => (
-            <>
-              <div className="controls">
-                <button onClick={start}>Start</button>
-                <button onClick={pause}>Pause</button>
-                <button onClick={stop}>Stop</button>
-              </div>
-              <h1>{currentWord}</h1>
-            </>
-          )}
-        />
-      </div>
-      <div className="demo-container">
-        <h2>Hooks demo</h2>
-        <div className="controls">
-          <button onClick={saySomething.start}>Start</button>
-          <button onClick={saySomething.pause}>Pause</button>
-          <button onClick={saySomething.stop}>Stop</button>
+      <div className="demo">
+        <h1>Demo</h1>
+        <div>
+          <button onClick={blabla.start}>Start</button>
+          <button onClick={blabla.pause}>Pause</button>
+          <button onClick={blabla.stop}>Stop</button>
         </div>
-        <p>
-          {saySomething.allWords.map((word: string, index: number) => (
+        <p className="demo-text">
+          {blabla.allWords.map((word: string, index: number) => (
             <span
               key={`${word}--${index}`}
-              style={{
-                color: index < saySomething.currentWordIndex ? 'blue' : '',
-              }}
+              className={
+                index === blabla.currentWordIndex
+                  ? 'demo-word--current'
+                  : index < blabla.currentWordIndex
+                  ? 'demo-word--said'
+                  : 'demo-word'
+              }
             >
               {`${word} `}
             </span>
@@ -62,6 +40,6 @@ const App = () => {
       </div>
     </>
   );
-};
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -1,8 +1,27 @@
-.demo-container {
+html {
+  font-size: 10px;
+}
+
+.demo {
   display: flex;
   flex-flow: column nowrap;
   padding: 2rem;
   height: 10%;
   width: 50%;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.demo-word {
+  font-size: 2rem;
+  color: dodgerblue;
+}
+
+.demo-word--current {
+  font-size: 5rem;
+  color: tomato;
+}
+
+.demo-word--said {
+  font-size: 5rem;
+  color: dodgerblue;
 }
