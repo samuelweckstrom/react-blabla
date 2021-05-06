@@ -13,6 +13,15 @@
     "react": "^16.8",
     "react-dom": "^16.8"
   },
+  "keywords": [
+    "speech to text",
+    "speech",
+    "synthesis",
+    "text",
+    "web audio",
+    "utterance",
+    "karaoke"
+  ],
   "scripts": {
     "start": "rm -rf ./dist && tsc --watch",
     "build": "rm -rf ./dist && tsc"
