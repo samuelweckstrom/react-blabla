@@ -9,16 +9,16 @@ export function useGetVoices(
   params: getVoicesParas
 ): SpeechSynthesisVoice[] | SpeechSynthesisVoice {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  window.speechSynthesis.onvoiceschanged = (e) => {
+  window.speechSynthesis.onvoiceschanged = () => {
     const allVoices = window.speechSynthesis.getVoices();
     setVoices(allVoices);
   };
-  if (params.name && voices.length) {
+  if (params?.name && voices.length) {
     const voiceByName = voices.find((voice) => voice.name === params.name);
     if (!voiceByName) console.error('Incorrect name of voice!');
     return voiceByName || voices[0];
   }
-  if (params.language && voices.length) {
+  if (params?.language && voices.length) {
     const voicesByLanguage = voices.filter(
       (voice) => voice.lang === params.language
     );
