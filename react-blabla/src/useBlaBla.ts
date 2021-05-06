@@ -22,8 +22,8 @@ type useBlablaValues = {
   currentWordIndex: number;
 };
 
-const synthesis = window.speechSynthesis;
-const Utterance = window.SpeechSynthesisUtterance;
+const synthesis = window?.speechSynthesis || {};
+const Utterance = window?.SpeechSynthesisUtterance || {};
 const utterance = new Utterance();
 
 export function useBlabla(params: useBlablaParams): useBlablaValues {
@@ -49,7 +49,7 @@ export function useBlabla(params: useBlablaParams): useBlablaValues {
     utterance.lang = params.options?.lang || 'en-US';
     if (params.options?.voice?.name) {
       utterance.voice =
-        params.options?.voice || window.speechSynthesis.getVoices()[0];
+        params.options?.voice || window?.speechSynthesis?.getVoices()[0];
     }
   }, [params]);
 
