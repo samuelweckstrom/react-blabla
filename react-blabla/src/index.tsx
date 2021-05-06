@@ -1,3 +1,2 @@
-export * from './useBlaBla';
-export * from './BlaBla';
+export * from './useBlabla';
 export * from './useGetVoices';

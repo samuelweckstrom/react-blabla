@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 
-type useBlaBlaOptions = {
+type useBlablaOptions = {
   pitch: number;
   rate: number;
   volume: number;
@@ -8,19 +8,29 @@ type useBlaBlaOptions = {
   lang: string;
 };
 
-type useBlaBlaParams = {
+type useBlablaParams = {
   sentence: string;
-  options?: Partial<useBlaBlaOptions>;
+  options?: Partial<useBlablaOptions>;
+};
+
+type useBlablaValues = {
+  start: () => void;
+  pause: () => void;
+  stop: () => void;
+  allWords: string[];
+  currentWord: string;
+  currentWordIndex: number;
 };
 
 const synthesis = window.speechSynthesis;
 const Utterance = window.SpeechSynthesisUtterance;
 const utterance = new Utterance();
 
-export function useBlaBla(params: useBlaBlaParams) {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [isStart, setIsStart] = useState(false);
-  const allWords = useMemo(() => params.sentence.split(' '), []);
+export function useBlabla(params: useBlablaParams): useBlablaValues {
+  const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
+  const [isStart, setIsStart] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const allWords: string[] = useMemo(() => params.sentence.split(' '), []);
   const sayNext = useCallback(() => {
     if (currentWordIndex === allWords.length + 1) {
       synthesis.cancel();
@@ -37,42 +47,51 @@ export function useBlaBla(params: useBlaBlaParams) {
     utterance.rate = params.options?.rate || 1;
     utterance.volume = params.options?.volume || 0.25;
     utterance.lang = params.options?.lang || 'en-US';
-    utterance.voice =
-      params.options?.voice || window.speechSynthesis.getVoices()[1];
+    if (params.options?.voice?.name) {
+      utterance.voice =
+        params.options?.voice || window.speechSynthesis.getVoices()[0];
+    }
   }, [params]);
 
   utterance.onstart = function () {
     setCurrentWordIndex(currentWordIndex + 1);
   };
+
   useEffect(() => {
     if (isStart) {
       sayNext();
     }
   }, [isStart, currentWordIndex]);
 
-  const handleStart = useCallback(() => {
-    setIsStart(true);
+  useEffect(() => {
+    synthesis.cancel();
   }, []);
 
-  const handlePause = useCallback(() => {
-    synthesis.pause();
-  }, []);
-  const handleResume = useCallback(() => {
-    synthesis.resume();
-  }, []);
-  const handleStop = useCallback(() => {
+  const stop = useCallback(() => {
     synthesis.cancel();
     setIsStart(false);
     setCurrentWordIndex(0);
   }, []);
 
+  const start = () => {
+    setIsStart(true);
+  };
+
+  const pause = () => {
+    if (isPaused) {
+      sayNext();
+    } else {
+      synthesis.cancel();
+    }
+    setIsPaused(!isPaused);
+  };
+
   return {
-    start: handleStart,
-    pause: handlePause,
-    resume: handleResume,
-    stop: handleStop,
+    start,
+    pause,
+    stop,
     allWords,
     currentWord: allWords[currentWordIndex - 1],
-    currentWordIndex,
+    currentWordIndex: Math.max(currentWordIndex - 1, 0),
   };
 }
