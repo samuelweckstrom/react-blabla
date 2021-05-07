@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type getVoicesParas = {
   language?: string;
@@ -8,24 +8,34 @@ type getVoicesParas = {
 export function useGetVoices(
   params: getVoicesParas
 ): SpeechSynthesisVoice[] | SpeechSynthesisVoice {
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  if (window?.speechSynthesis?.onvoiceschanged) {
-    window.speechSynthesis.onvoiceschanged = () => {
-      const allVoices = window.speechSynthesis.getVoices();
-      setVoices(allVoices);
-    };
-  }
-  if (params?.name && voices.length) {
-    const voiceByName = voices.find((voice) => voice.name === params.name);
-    if (!voiceByName) console.error('Incorrect name of voice!');
-    return voiceByName || voices[0];
-  }
-  if (params?.language && voices.length) {
-    const voicesByLanguage = voices.filter(
-      (voice) => voice.lang === params.language
-    );
-    if (!voicesByLanguage.length) console.error('Incorrect language code!');
-    return voicesByLanguage.length ? voicesByLanguage : voices[0];
-  }
-  return voices;
+  const [allVoices, setAllVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [voicesByParam, setVoicesByParam] = useState<
+    SpeechSynthesisVoice | SpeechSynthesisVoice[]
+  >([]);
+  window.speechSynthesis.onvoiceschanged = () => {
+    const all = window.speechSynthesis.getVoices();
+    setAllVoices(all);
+  };
+
+  useEffect(() => {
+    if (allVoices.length) {
+      if (params?.name) {
+        const voiceByName = allVoices.find(
+          (voice) => voice.name === params.name
+        );
+        if (!voiceByName) console.error('Incorrect name of voice!');
+        setVoicesByParam(voiceByName || allVoices[0]);
+      }
+      if (params?.language) {
+        const voicesByLanguage = allVoices.filter(
+          (voice) => voice.lang === params.language
+        );
+        if (!voicesByLanguage.length) console.error('Incorrect language code!');
+        setVoicesByParam(
+          voicesByLanguage.length ? voicesByLanguage : allVoices[0]
+        );
+      }
+    }
+  }, [allVoices]);
+  return voicesByParam;
 }
