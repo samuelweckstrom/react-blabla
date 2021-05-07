@@ -23,7 +23,7 @@ import { useBlabla } from 'react-blabla'
 
 ...
 
-const saySomething = useBlabla({ sentence: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum' });
+const saySomething = useBlabla({ text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum' });
 
 return (
   <>
@@ -38,7 +38,7 @@ return (
 
 | Param         | Example |
 | ------------- | ------------- |
-|`sentence: string`| Text for speech |
+|`text: string`| Text for speech |
 |`options?: object`| Options for speech, same as defined in the Web API | 
 ||pitch: number||
 ||rate: number||
