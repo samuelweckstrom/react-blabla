@@ -38,7 +38,7 @@ return (
 
 | Param         | Example |
 | ------------- | ------------- |
-|`sentence: string`| Text for speech |
+|`text: string`| Text for speech |
 |`options?: object`| Options for speech, same as defined in the Web API | 
 ||pitch: number||
 ||rate: number||
