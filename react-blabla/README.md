@@ -44,7 +44,6 @@ return (
 ||rate: number||
 ||volume: number||
 ||voice: SpeechSynthesisVoice||
-||lang: string||
 
 <br>
 
