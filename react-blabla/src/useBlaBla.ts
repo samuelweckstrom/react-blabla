@@ -30,7 +30,7 @@ export function useBlabla(params: useBlablaParams): useBlablaValues {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [isStart, setIsStart] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  const allWords: string[] = useMemo(() => params?.text.split(' '), []);
+  const allWords: string[] = useMemo(() => params?.text?.split(' ') || [], []);
   const sayNext = useCallback(() => {
     if (currentWordIndex === allWords.length + 1) {
       synthesis.cancel();
@@ -43,13 +43,15 @@ export function useBlabla(params: useBlablaParams): useBlablaValues {
   }, [currentWordIndex, utterance]);
 
   useEffect(() => {
-    utterance.pitch = params.options?.pitch || 1;
-    utterance.rate = params.options?.rate || 1;
-    utterance.volume = params.options?.volume || 0.25;
-    utterance.lang = params.options?.lang || 'en-US';
-    if (params.options?.voice?.name) {
-      utterance.voice =
-        params.options?.voice || window?.speechSynthesis?.getVoices()[0];
+    if (params?.options) {
+      utterance.pitch = params.options?.pitch || 1;
+      utterance.rate = params.options?.rate || 1;
+      utterance.volume = params.options?.volume || 0.25;
+      utterance.lang = params.options?.lang || 'en-US';
+      if (params.options?.voice?.name) {
+        utterance.voice =
+          params.options?.voice || window?.speechSynthesis?.getVoices()[0];
+      }
     }
   }, [params]);
 
