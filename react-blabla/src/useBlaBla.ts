@@ -9,7 +9,7 @@ type useBlablaOptions = {
 };
 
 type useBlablaParams = {
-  sentence: string;
+  text: string;
   options?: Partial<useBlablaOptions>;
 };
 
@@ -30,7 +30,7 @@ export function useBlabla(params: useBlablaParams): useBlablaValues {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [isStart, setIsStart] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  const allWords: string[] = useMemo(() => params.sentence.split(' '), []);
+  const allWords: string[] = useMemo(() => params?.text.split(' '), []);
   const sayNext = useCallback(() => {
     if (currentWordIndex === allWords.length + 1) {
       synthesis.cancel();
@@ -74,6 +74,11 @@ export function useBlabla(params: useBlablaParams): useBlablaValues {
   }, []);
 
   const start = () => {
+    if (isPaused) {
+      sayNext();
+      setIsPaused(!isPaused);
+      return;
+    }
     setIsStart(true);
   };
 
