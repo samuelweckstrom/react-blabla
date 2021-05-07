@@ -30,7 +30,10 @@ export function useBlabla(params: useBlablaParams): useBlablaValues {
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [isStart, setIsStart] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  const allWords: string[] = useMemo(() => params?.text?.split(' ') || [], []);
+  const allWords: string[] = useMemo(
+    () => params?.text?.split(' ').filter((str: string) => str) || [],
+    []
+  );
   const sayNext = useCallback(() => {
     if (currentWordIndex === allWords.length + 1) {
       synthesis.cancel();
